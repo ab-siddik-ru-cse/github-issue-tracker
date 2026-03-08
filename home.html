@@ -14,8 +14,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
-    <nav class="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center w-full sm:px-10 py-4 sm:py-5 bg-[#F8FAFC] border-b-2 border-gray-300">
+<body class="bg-[#E9E9E9]">
+    <nav
+        class="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center w-full sm:px-10 py-4 sm:py-5 bg-[#F8FAFC] border-b-2 border-gray-300">
         <div class="flex items-center gap-2 justify-center">
             <img class="w-8" src="assets/github-logo.png" alt="">
             <h1 class="font-bold sm:text-xl">GitHub Issues Tracker</h1>
@@ -31,6 +32,40 @@
             </div>
         </div>
     </nav>
+
+    <section class="flex max-w-[1300px] mx-auto flex-wrap gap-2 sm:gap-4 justify-start bg-[#F8FAFC] p-4 sm:p-6 mt-6 sm:mt-10 rounded-lg shadow-sm">
+        <button onclick="getBtnCategory('all')"
+            class="flex justify-center border border-gray-300 btn-category btn-category-all active rounded-sm px-12 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">All</button>
+        <button onclick="getBtnCategory('open')"
+            class="flex justify-center border border-gray-300 btn-category btn-category-open rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">Open</button>
+        <button onclick="getBtnCategory('closed')"
+            class="flex justify-center border border-gray-300 btn-category btn-category-closed rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">Closed</button>
+    </section>
+    <section
+        class="max-w-[1300px] mx-auto flex flex-col items-start justify-start sm:flex-row sm:justify-between sm:items-center p-6 mt-6 rounded-lg shadow-sm bg-[#F8FAFC] border-b-2 border-b-gray-300 gap-4 sm:gap-0">
+        <div class="flex items-center gap-2 justify-center">
+            <div class="bg-[#ECE4FF] p-3 rounded-full">
+                <img class="w-10" src="assets/Aperture.png" alt="">
+            </div>
+            <div class="space-y-2">
+                <h1 class="font-bold text-xl"><span id="totalIssues">0</span> Issues</h1>
+                <p class="text-sm text-gray-500">Track and manage your project issues</p>
+            </div>
+
+        </div>
+        <div class="flex gap-3">
+            <div>
+                <p class="font-medium"><i class="fa-solid fa-circle text-sm text-green-600"> </i> Open</p>
+            </div>
+            <div>
+                <p class="font-medium"><i class="fa-solid fa-circle text-sm text-[#A855F7]"> </i> Closed</p>
+            </div>
+        </div>
+    </section>
+    <section id="issuesContainer" class="bg-[#FBFBFB] gap-4 max-w-[1300px] mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 rounded-lg">
+        
+    </section>
+
 </body>
 
 </html>
