@@ -5,6 +5,17 @@ const loginPage = document.getElementById('login-page');
 const inputUsername = document.getElementById('inputUsername');
 const inputPassword = document.getElementById('inputPassword');
 const demoDiv = document.getElementById('login-error');
+//For home page
+const search = document.getElementById('search');
+const btnCategoryAll = document.querySelector('.btn-category-all');
+const btnCategoryOpen = document.querySelector('.btn-category-open');
+const btnCategoryClosed = document.querySelector('.btn-category-closed');
+const categoryBtn = document.querySelectorAll('.btn-category');
+const totalIssues = document.getElementById('totalIssues');
+const issuesContainer = document.getElementById('issuesContainer');
+const openTag = document.getElementById('open-tag');
+const closedTag = document.getElementById('closed-tag');
+
 
 loginBtn.addEventListener('click', () => {
     const usernameValue = inputUsername.value.trim();
@@ -30,20 +41,79 @@ const loadDataFromDB = async (url) => {
     return await resp.json();
 }
 
+
+const getSearchInfo = () => {
+    removeActive();
+
+    openTag.classList.remove('hidden');
+    closedTag.classList.remove('hidden');
+    const searchValue = search.value.trim();
+    const urlSearchIssues = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`;
+    fetch(urlSearchIssues)
+        .then(resp => resp.json())
+        .then(result => displayAllIssues(result.data));
+
+}
+
+
+const getBtnCategory = (category) => {
+    search.value = '';
+    if (category === 'all') {
+        removeActive();
+
+        openTag.classList.remove('hidden');
+        closedTag.classList.remove('hidden');
+
+        btnCategoryAll.classList.add('active');
+        fetch(urlAllIssues)
+            .then(resp => resp.json())
+            .then(result => displayAllIssues(result.data));
+    }
+    if (category === 'open') {
+        removeActive();
+        closedTag.classList.add('hidden');
+        openTag.classList.remove('hidden');
+        btnCategoryOpen.classList.add('active');
+        fetch(urlAllIssues)
+            .then(resp => resp.json())
+            .then(result => displayAllIssues(result.data.filter(issue => issue.status === category)));
+    }
+    if (category === 'closed') {
+        openTag.classList.add('hidden');
+        closedTag.classList.remove('hidden');
+        removeActive();
+        btnCategoryClosed.classList.add('active');
+        fetch(urlAllIssues)
+            .then(resp => resp.json())
+            .then(result => displayAllIssues(result.data.filter(issue => issue.status === category)));
+    }
+    else {
+        return
+    }
+}
+
+const removeActive = () => {
+    console.log(categoryBtn);
+
+    categoryBtn.forEach(btn => {
+        btn.classList.remove('active')
+    });
+}
+
 const createButtons = (labels) => {
     const labelConfigs = {
         "bug": { icon: "fa-bug", style: "bg-red-50 text-red-600 border" },
         "help wanted": { icon: "fa-life-ring", style: "bg-[#FFF6D1] text-[#F59E0B] border" },
         "enhancement": { icon: "fa-wand-magic-sparkles", style: "bg-green-50 text-green-600 border" },
-        "good first issue": { icon: "fa-seedling", style: "bg-blue-50 text-blue-600 border" },
-        "documentation": { icon: "fa-book", style: "bg-gray-50 text-gray-600 border" }
+        "good first issue": { icon: "fa-thumbs-up", style: "bg-blue-50 text-blue-600 border" },
+        "documentation": { icon: "fa-book", style: "bg-[#EEEFF2] text-gray-500 border" }
     };
-    
+
     return labels.map(label => {
         const config = labelConfigs[label.toLowerCase()] || { icon: "fa-tag", style: "bg-slate-50 text-slate-500 border-slate-200" };
 
         return `
-      <button class="px-2.5 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1.5 uppercase tracking-wide ${config.style}">
+      <button class="px-2.5 py-1 rounded-full text-[10px] font-semibold flex items-center justify-center text-center gap-1.5 uppercase tracking-wide ${config.style}">
         <i class="fa-solid ${config.icon}"></i>
         ${label}
       </button>`;
@@ -51,10 +121,8 @@ const createButtons = (labels) => {
 }
 
 const displayAllIssues = (issues) => {
-    const totalIssues = document.getElementById('totalIssues');
     totalIssues.innerHTML = issues.length;
 
-    const issuesContainer = document.getElementById('issuesContainer');
     issuesContainer.innerHTML = "";
 
     if (issues.length === 0) {
@@ -84,13 +152,12 @@ const displayAllIssues = (issues) => {
                 <div class="mt-3 mb-4 flex flex-wrap gap-2">
                     ${createButtons(issue.labels)}
                 </div>
-                <div class="pt-4 border-t border-gray-300 mt-auto flex flex-col gap-2.5 text-xs text-gray-500">
+                <div class="pt-4 w-full border-t border-gray-200 mt-auto flex flex-col gap-2.5 text-xs text-gray-500">
                     <p class="text-sm text-gray-500">#${issue.id} by ${issue.author}</p>
                     <p class="text-sm text-gray-500">${localDate.toLocaleDateString()}</p>
                 </div>
            </div>                                                                                  
         `;
-
         issuesContainer.appendChild(issueDiv);
     });
 }
