@@ -30,6 +30,26 @@ const loadDataFromDB = async (url) => {
     return await resp.json();
 }
 
+const createButtons = (labels) => {
+    const labelConfigs = {
+        "bug": { icon: "fa-bug", style: "bg-red-50 text-red-600 border" },
+        "help wanted": { icon: "fa-life-ring", style: "bg-[#FFF6D1] text-[#F59E0B] border" },
+        "enhancement": { icon: "fa-wand-magic-sparkles", style: "bg-green-50 text-green-600 border" },
+        "good first issue": { icon: "fa-seedling", style: "bg-blue-50 text-blue-600 border" },
+        "documentation": { icon: "fa-book", style: "bg-gray-50 text-gray-600 border" }
+    };
+    
+    return labels.map(label => {
+        const config = labelConfigs[label.toLowerCase()] || { icon: "fa-tag", style: "bg-slate-50 text-slate-500 border-slate-200" };
+
+        return `
+      <button class="px-2.5 py-1 rounded-full text-[10px] font-semibold flex items-center gap-1.5 uppercase tracking-wide ${config.style}">
+        <i class="fa-solid ${config.icon}"></i>
+        ${label}
+      </button>`;
+    }).join(' ');
+}
+
 const displayAllIssues = (issues) => {
     const totalIssues = document.getElementById('totalIssues');
     totalIssues.innerHTML = issues.length;
@@ -52,20 +72,20 @@ const displayAllIssues = (issues) => {
 
         const issueDiv = document.createElement('div');
         issueDiv.innerHTML = `
-            <div id="border-${issue.status}" class="bg-[#ffffff] p-4 rounded-lg shadow-md w-[300px] h-[320px]">
-                <div class="flex justify-between items-center mb-3">
+            <div id="border-${issue.status}" class="bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-full cursor-pointer group">
+                <div class="flex justify-between items-start mb-4">
                     <img src="assets/${issue.status}.png" alt="">
                     <button id="priorityBtn-${issue.priority}" class="px-6 py-1 rounded-full uppercase text-sm">${issue.priority}</button>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-2 flex-grow">
                     <h2 class="font-medium">${issue.title}</h2>
-                    <p class="text-sm text-gray-500 mb-2">${issue.description}</p>
+                    <p class="text-sm text-gray-500 line-clamp-3">${issue.description}</p>
                 </div>
-                <div class="my-4 flex justify-start gap-2">
-                    Hello
+                <div class="mt-3 mb-4 flex flex-wrap gap-2">
+                    ${createButtons(issue.labels)}
                 </div>
-                <div class="space-y-2 border-t border-gray-300 w-full">
-                    <p class="text-sm text-gray-500 mt-3">#${issue.id} by ${issue.author}</p>
+                <div class="pt-4 border-t border-gray-300 mt-auto flex flex-col gap-2.5 text-xs text-gray-500">
+                    <p class="text-sm text-gray-500">#${issue.id} by ${issue.author}</p>
                     <p class="text-sm text-gray-500">${localDate.toLocaleDateString()}</p>
                 </div>
            </div>                                                                                  
