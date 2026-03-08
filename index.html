@@ -14,10 +14,59 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
+<body class="bg-[#F8FAFC]">
+    <section class="max-w-[520px] mx-auto my-10 sm:my-20 rounded-lg shadow-lg bg-white p-8">
+        <div class="flex flex-col items-center">
+            <img class="mb-6" src="assets/github-logo.png" alt="">
+            <h1 class="font-bold text-xl mb-1.5">GitHub Issues Tracker</h1>
+            <p class="text-sm font-medium text-gray-500">Sign in to manage your issues</p>
+        </div>
+        <div>
+            <div class="space-y-3 ">
+                <div>
+                    <label for="username" class="block text-sm/6 font-medium text-gray-700">Username</label>
+                    <div class="mt-2">
+                        <input id="inputUsername" type="text" name="user" required autocomplete="username"
+                            placeholder="Enter user name"
+                            class="block w-full rounded-md  px-3 py-3 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                    </div>
+                    <p class="text-sm font-medium text-indigo-600 mt-2">Default : admin</p>
+                </div>
 
-    <h1>Welcome to issue tracker.</h1>
+                <div>
+                    <div class="mt-2">
+                        <label for="password" class="block text-sm/6 font-medium text-gray-700">Password</label>
+                        <input id="inputPassword" type="password" name="password" required
+                            autocomplete="current-password" placeholder="Enter password"
+                            class="block w-full rounded-md  px-3 py-3 tex outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                    </div>
+                    <p class="text-sm font-medium text-indigo-600 mt-2">Default : admin123</p>
+                </div>
 
+                <div>
+                    <button id="loginBtn" type="submit"
+                        class="flex w-full justify-center rounded-md bg-[#4A00FF] px-3 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700 cursor-pointer transition-colors">Sign
+                        in</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center my-5">
+            <div class="flex-grow border-t-1 border-gray-300"></div>
+            <span class="flex-shrink mx-4 text-gray-600 font-semibold">OR</span>
+            <div class="flex-grow border-t-1 border-gray-300"></div>
+        </div>
+        <div class="mx-auto">
+            <p id="login-error" class="text-red-700 text-center mb-3 hidden">Incorrect username or password!</p>
+            <p class="text-gray-500 text-center mb-3">Demo Credentials:</p>
+            <div class="bg-gray-100 p-5 rounded-lg text-center">
+                <h2 class="font-bold text-black">Username : <span class="font-semibold text-gray-500">admin</span></h2>
+                <h2 class="font-bold text-black">Password : <span class="font-semibold text-gray-500">admin123</span>
+                </h2>
+            </div>
+        </div>
+
+    </section>
+    <script src="scripts/login.js"></script>
 </body>
 
 </html>
