@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Github Issue Tracker</title>
+    <link rel="shortcut icon" href="assets/github-logo.png" type="image/x-icon">
+    <!-- tailwind css -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-    <h1>Welcome to home.</h1>
+    <nav class="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center w-full sm:px-10 py-4 sm:py-5 bg-[#F8FAFC] border-b-2 border-gray-300">
+        <div class="flex items-center gap-2 justify-center">
+            <img class="w-8" src="assets/github-logo.png" alt="">
+            <h1 class="font-bold sm:text-xl">GitHub Issues Tracker</h1>
+        </div>
+        <div class="flex gap-3">
+            <input id="search" type="text" name="search" placeholder="🔍 Search issues..." class="block rounded-sm pl-3  sm:pl-5 pr-2 sm:pr-10 py-2 outline-1 -outline-offset-1
+                 outline-gray-300 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
+                  focus:outline-indigo-500 sm:text-sm/6" />
+            <div>
+                <button onclick="getSearchInfo()" id="search"
+                    class="flex-shrink-0 flex justify-center rounded-sm bg-[#4A00FF] px-5 py-2 text-sm/6 font-semibold text-white hover:bg-indigo-700 cursor-pointer transition-colors">Search
+                    Issue</button>
+            </div>
+        </div>
+    </nav>
 </body>
+
 </html>
