@@ -251,7 +251,6 @@ const getDataFromDB = async () => {
     const resp = await fetch(urlAllIssues);
     const allIssues = await resp.json();
     globalIssuesData = allIssues.data;
-    console.log(globalIssuesData);
     displayAllIssues(globalIssuesData);
 }
 getDataFromDB();
