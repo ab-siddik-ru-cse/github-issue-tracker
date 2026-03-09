@@ -15,7 +15,7 @@
 
     <style>
         .active {
-            background-color: blue;
+            background-color: #4A00FF;
             color: white;
         }
 
@@ -40,7 +40,7 @@
     </style>
 </head>
 
-<body class="bg-[#E9E9E9]">
+<body class="bg-[#F8FAFC]">
     <section id="login-page" class="max-w-[520px] mx-auto my-10 sm:my-20 rounded-lg shadow-lg bg-white p-8">
         <div class="flex flex-col items-center">
             <img class="mb-6" src="assets/github-logo.png" alt="">
@@ -82,7 +82,7 @@
             <div class="flex-grow border-t-1 border-gray-300"></div>
         </div>
         <div class="mx-auto">
-            <p id="login-error" class="text-red-700 text-center mb-3 hidden">Incorrect username or password!</p>
+            <p id="login-error" class="text-red-600 text-center mb-3 hidden">Incorrect username or password!</p>
             <p class="text-gray-500 text-center mb-3">Demo Credentials:</p>
             <div class="bg-gray-100 p-5 rounded-lg text-center">
                 <h2 class="font-bold text-black">Username : <span class="font-semibold text-gray-500">admin</span></h2>
@@ -93,9 +93,9 @@
 
     </section>
 
-    <div id="home-page" class="bg-[#E9E9E9] hidden">
+    <div id="home-page" class="bg-[#F8FAFC] hidden">
         <nav
-            class="max-w-[1300px] mx-auto rounded-lg flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center w-full sm:px-10 py-4 sm:py-5 bg-[#F8FAFC] border-b-2 border-gray-300">
+            class="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between items-center w-full sm:px-10 py-4 sm:py-5 bg-white border-b border-gray-300">
             <div class="flex items-center gap-2 justify-center">
                 <img class="w-8" src="assets/github-logo.png" alt="">
                 <h1 class="font-bold sm:text-xl">GitHub Issues Tracker</h1>
@@ -113,21 +113,21 @@
         </nav>
 
         <section
-            class="flex max-w-[1300px] mx-auto flex-wrap gap-2 sm:gap-4 justify-start bg-[#F8FAFC] p-4 sm:p-6 mt-6 sm:mt-10 rounded-lg shadow-sm">
+            class="flex max-w-[1300px] mx-auto flex-wrap gap-2 sm:gap-4 justify-start bg-white p-4 sm:p-6 mt-6 sm:mt-10 rounded-lg shadow-sm">
             <button onclick="getBtnCategory('all')"
-                class="flex justify-center border border-gray-300 btn-category btn-category-all active rounded-sm px-12 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">All</button>
+                class="flex justify-center border border-gray-300 btn-category btn-category-all active rounded-sm px-12 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer hover:bg-[#4A00FF] hover:text-white transition-colors ">All</button>
             <button onclick="getBtnCategory('open')"
-                class="flex justify-center border border-gray-300 btn-category btn-category-open rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">Open</button>
+                class="flex justify-center border border-gray-300 btn-category btn-category-open rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer hover:bg-[#4A00FF] hover:text-white transition-colors">Open</button>
             <button onclick="getBtnCategory('closed')"
-                class="flex justify-center border border-gray-300 btn-category btn-category-closed rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer transition-colors">Closed</button>
+                class="flex justify-center border border-gray-300 btn-category btn-category-closed rounded-sm px-10 py-2 text-sm/6 font-semibold text-gray-500 cursor-pointer hover:bg-[#4A00FF] hover:text-white transition-colors">Closed</button>
         </section>
         <section
-            class="max-w-[1300px] mx-auto flex flex-col items-start justify-start sm:flex-row sm:justify-between sm:items-center p-6 mt-6 rounded-lg shadow-sm bg-[#F8FAFC] border-b-2 border-b-gray-300 gap-4 sm:gap-0">
+            class="max-w-[1300px] mx-auto flex flex-col items-start justify-start sm:flex-row sm:justify-between sm:items-center p-6 mt-6 rounded-t-lg shadow-sm bg-white border-b border-b-gray-300 gap-4 sm:gap-0">
             <div class="flex items-center gap-2 justify-center">
-                <div class="bg-[#ECE4FF] p-3 rounded-full">
-                    <img class="w-10" src="assets/Aperture.png" alt="">
+                <div class="bg-[#ECE4FF] p-2 rounded-full">
+                    <img src="assets/Aperture.png" alt="">
                 </div>
-                <div class="space-y-2">
+                <div class="space-y-1">
                     <h1 class="font-bold text-xl"><span id="totalIssues">0</span> Issues</h1>
                     <p class="text-sm text-gray-500">Track and manage your project issues</p>
                 </div>
@@ -146,7 +146,7 @@
             <p class="text-gray-500 font-medium animate-pulse">Loading issues...</p>
         </div>
         <section id="issuesContainer"
-            class="bg-[#FBFBFB] gap-4 max-w-[1300px] mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 rounded-lg">
+            class="bg-[#FBFBFB] gap-4 max-w-[1300px] mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 rounded-b-lg shadow-md">
 
         </section>
     </div>

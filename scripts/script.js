@@ -1,4 +1,5 @@
 let globalIssuesData = [];
+
 //For login page
 const loginBtn = document.getElementById('loginBtn');
 const homePage = document.getElementById('home-page');
@@ -6,6 +7,7 @@ const loginPage = document.getElementById('login-page');
 const inputUsername = document.getElementById('inputUsername');
 const inputPassword = document.getElementById('inputPassword');
 const demoDiv = document.getElementById('login-error');
+
 //For home page
 const search = document.getElementById('searchInput');
 const btnCategoryAll = document.querySelector('.btn-category-all');
@@ -19,7 +21,6 @@ const closedTag = document.getElementById('closed-tag');
 const modalBox = document.getElementById("modal-box");
 const closeBtn = document.getElementById("closeBtn");
 const loadingSpinner = document.getElementById('loading-spinner')
-
 
 loginBtn.addEventListener('click', () => {
     const usernameValue = inputUsername.value.trim();
@@ -41,10 +42,11 @@ loginBtn.addEventListener('click', () => {
 const urlAllIssues = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
 
 const getSearchInfo = async () => {
-    openTag.classList.remove('hidden');
-    closedTag.classList.remove('hidden');
+
     const searchValue = search.value.trim();
     if (searchValue !== '') {
+        openTag.classList.remove('hidden');
+        closedTag.classList.remove('hidden');
         removeActive();
         showSpinner();
 
@@ -141,7 +143,7 @@ const displayAllIssues = (issues) => {
 
         const issueDiv = document.createElement('div');
         issueDiv.innerHTML = `
-            <div onclick="openModal(${issue.id})" class="border-t-4 border-${borderColor} bg-white p-5 rounded-lg shadow-sm hover:shadow-md duration-200 flex flex-col h-full cursor-pointer group transition-all">
+            <div onclick="openModal(${issue.id})" class="border-t-4 border-${borderColor} bg-white p-5 rounded-md shadow-sm hover:shadow-md duration-200 flex flex-col h-full cursor-pointer group transition-all">
                 <div class="flex justify-between items-start mb-4">
                     <img src="assets/${issue.status}.png" alt="">
                     <button class="px-6 py-1 ${priorityClass} rounded-full uppercase text-sm">${issue.priority}</button>
@@ -193,7 +195,7 @@ const displayModalInfo = (issue) => {
             <div class="flex gap-2 justify-start items-center">
                 <button class="px-2.5 py-1 bg-${borderColor} text-white rounded-full capitalize">${issue.status}</button>
                 <i class="fa-solid fa-circle text-[5px] text-gray-500"> </i>
-                <p class="text-sm text-gray-600 capitalize">Opened by ${nameAuthor.split('_').join(' ')?nameAuthor.split('_').join(' '):'Author Not Found'}</p>
+                <p class="text-sm text-gray-600 capitalize">Opened by ${nameAuthor.split('_').join(' ') ? nameAuthor.split('_').join(' ') : 'Author Not Found'}</p>
                 <i class="fa-solid fa-circle text-[5px] text-gray-500"> </i>
                 <p class="text-sm text-gray-600">${localDate.toLocaleDateString()}</p>
             </div>
