@@ -1,3 +1,4 @@
+let globalIssuesData = [];
 //For login page
 const loginBtn = document.getElementById('loginBtn');
 const homePage = document.getElementById('home-page');
@@ -6,7 +7,7 @@ const inputUsername = document.getElementById('inputUsername');
 const inputPassword = document.getElementById('inputPassword');
 const demoDiv = document.getElementById('login-error');
 //For home page
-const search = document.getElementById('search');
+const search = document.getElementById('searchInput');
 const btnCategoryAll = document.querySelector('.btn-category-all');
 const btnCategoryOpen = document.querySelector('.btn-category-open');
 const btnCategoryClosed = document.querySelector('.btn-category-closed');
@@ -15,6 +16,9 @@ const totalIssues = document.getElementById('totalIssues');
 const issuesContainer = document.getElementById('issuesContainer');
 const openTag = document.getElementById('open-tag');
 const closedTag = document.getElementById('closed-tag');
+const modalBox = document.getElementById("modal-box");
+const closeBtn = document.getElementById("closeBtn");
+const loadingSpinner = document.getElementById('loading-spinner')
 
 
 loginBtn.addEventListener('click', () => {
@@ -28,7 +32,7 @@ loginBtn.addEventListener('click', () => {
     else {
         demoDiv.classList.remove('hidden');
         inputUsername.value = '';
-        passwordValue.value = '';
+        inputPassword.value = '';
         return;
     }
 });
@@ -36,65 +40,55 @@ loginBtn.addEventListener('click', () => {
 //For Database
 const urlAllIssues = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
 
-const loadDataFromDB = async (url) => {
-    const resp = await fetch(url);
-    return await resp.json();
-}
-
-
-const getSearchInfo = () => {
-    removeActive();
-
+const getSearchInfo = async () => {
     openTag.classList.remove('hidden');
     closedTag.classList.remove('hidden');
     const searchValue = search.value.trim();
-    const urlSearchIssues = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`;
-    fetch(urlSearchIssues)
-        .then(resp => resp.json())
-        .then(result => displayAllIssues(result.data));
-
-}
-
-
-const getBtnCategory = (category) => {
-    search.value = '';
-    if (category === 'all') {
+    if (searchValue !== '') {
         removeActive();
+        showSpinner();
 
+        const urlSearchIssues = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`;
+        const resp = await fetch(urlSearchIssues);
+        const result = await resp.json();
+        displayAllIssues(result.data);
+    }
+
+    hideSpinner();
+}
+const getBtnCategory = async (category) => {
+    search.value = '';
+    showSpinner();
+
+    const resp = await fetch(urlAllIssues);
+    const result = await resp.json();
+
+    let filteredData = result.data;
+    if (category !== 'all') {
+        filteredData = result.data.filter(issue => issue.status === category);
+    }
+    removeActive();
+    if (category === 'all') {
         openTag.classList.remove('hidden');
         closedTag.classList.remove('hidden');
-
         btnCategoryAll.classList.add('active');
-        fetch(urlAllIssues)
-            .then(resp => resp.json())
-            .then(result => displayAllIssues(result.data));
     }
     if (category === 'open') {
-        removeActive();
         closedTag.classList.add('hidden');
         openTag.classList.remove('hidden');
         btnCategoryOpen.classList.add('active');
-        fetch(urlAllIssues)
-            .then(resp => resp.json())
-            .then(result => displayAllIssues(result.data.filter(issue => issue.status === category)));
     }
     if (category === 'closed') {
         openTag.classList.add('hidden');
         closedTag.classList.remove('hidden');
-        removeActive();
-        btnCategoryClosed.classList.add('active');
-        fetch(urlAllIssues)
-            .then(resp => resp.json())
-            .then(result => displayAllIssues(result.data.filter(issue => issue.status === category)));
-    }
-    else {
-        return
-    }
+        btnCategoryClosed.classList.add('active')
+    };
+
+    displayAllIssues(filteredData);
+    hideSpinner();
 }
 
 const removeActive = () => {
-    console.log(categoryBtn);
-
     categoryBtn.forEach(btn => {
         btn.classList.remove('active')
     });
@@ -121,29 +115,36 @@ const createButtons = (labels) => {
 }
 
 const displayAllIssues = (issues) => {
+    showSpinner()
     totalIssues.innerHTML = issues.length;
-
     issuesContainer.innerHTML = "";
 
     if (issues.length === 0) {
         issuesContainer.innerHTML = `
-            <div class="col-span-4 p-18 text-center rounded-xl space-y-6 ">
+            <div class="col-span-4 w-full h-full p-6 sm:p-18 text-center rounded-xl space-y-6 ">
                 <i class="text-6xl text-gray-500 fa-regular fa-face-frown"></i>
                 <h1 class="font-bold font-bangla text-3xl text-gray-500">No Issue Found...!</h1>
             </div>
         `;
+        hideSpinner();
         return;
     }
 
     issues.forEach(issue => {
         const localDate = new Date(issue.createdAt);
+        const borderColor = issue.status === 'open' ? '[#00A96E]' : '[#A855F7]';
+
+        let priorityClass = '';
+        if (issue.priority === 'high') priorityClass = 'bg-[#FEECEC] text-[#EF4444]';
+        else if (issue.priority === 'medium') priorityClass = 'bg-[#FFF6D1] text-[#F59E0B]';
+        else priorityClass = 'bg-[#EEEFF2] text-[#9CA3AF]';
 
         const issueDiv = document.createElement('div');
         issueDiv.innerHTML = `
-            <div id="border-${issue.status}" class="bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col h-full cursor-pointer group">
+            <div onclick="openModal(${issue.id})" class="border-t-4 border-${borderColor} bg-white p-5 rounded-lg shadow-sm hover:shadow-md duration-200 flex flex-col h-full cursor-pointer group transition-all">
                 <div class="flex justify-between items-start mb-4">
                     <img src="assets/${issue.status}.png" alt="">
-                    <button id="priorityBtn-${issue.priority}" class="px-6 py-1 rounded-full uppercase text-sm">${issue.priority}</button>
+                    <button class="px-6 py-1 ${priorityClass} rounded-full uppercase text-sm">${issue.priority}</button>
                 </div>
                 <div class="space-y-2 flex-grow">
                     <h2 class="font-medium">${issue.title}</h2>
@@ -160,12 +161,95 @@ const displayAllIssues = (issues) => {
         `;
         issuesContainer.appendChild(issueDiv);
     });
+    hideSpinner();
+
 }
 
-const getDataFromDB = async () => {
-    const allIssues = await loadDataFromDB(urlAllIssues);
-    console.log(allIssues.data);
+const openModal = (id) => {
+    const issue = globalIssuesData.find(issue => issue.id === id);
+    if (issue) displayModalInfo(issue);
 
-    displayAllIssues(allIssues.data);
+    modalBox.classList.remove("hidden");
+    modalBox.classList.add("flex");
+}
+
+const displayModalInfo = (issue) => {
+    const localDate = new Date(issue.createdAt);
+    const nameAuthor = issue.author;
+    const assigneeName = issue.assignee;
+
+    const borderColor = issue.status === 'open' ? '[#00A96E]' : '[#A855F7]';
+    let priorityClass = '';
+    if (issue.priority === 'high') priorityClass = 'bg-[#EF4444] text-[#FFFFFF]';
+    else if (issue.priority === 'medium') priorityClass = 'bg-yellow-500 text-[#FFFFFF]';
+    else priorityClass = 'bg-gray-600 text-[#FFFFFF]';
+
+    modalBox.innerHTML = "";
+
+    const issueDiv = document.createElement('div');
+    issueDiv.innerHTML = `
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-[700px] space-y-6 ">
+            <h2 class="text-xl font-bold mb-2">${issue.title}</h2>
+            <div class="flex gap-2 justify-start items-center">
+                <button class="px-2.5 py-1 bg-${borderColor} text-white rounded-full capitalize">${issue.status}</button>
+                <i class="fa-solid fa-circle text-[5px] text-gray-500"> </i>
+                <p class="text-sm text-gray-600 capitalize">Opened by ${nameAuthor.split('_').join(' ')?nameAuthor.split('_').join(' '):'Author Not Found'}</p>
+                <i class="fa-solid fa-circle text-[5px] text-gray-500"> </i>
+                <p class="text-sm text-gray-600">${localDate.toLocaleDateString()}</p>
+            </div>
+            <div class="mt-3 mb-4 flex flex-wrap gap-2">
+                    ${createButtons(issue.labels)}
+            </div>
+            <p class="mb-4 text-gray-600">${issue.description}</p>
+            <div class="bg-gray-100 p-4 rounded-lg flex justify-between">
+                <div>
+                    <p class="text-gray-600">Assignee:</p>
+                    <h2 class="text-gray-700 font-semibold capitalize">${assigneeName.split('_').join(' ') ? assigneeName.split('_').join(' ') : 'Not Assigned'}</h2>
+                </div>
+                <div>
+                    <p class="text-gray-600">Priority:</p>
+                    <button id="priorityBtn-${issue.priority}" class="px-3 py-1 ${priorityClass} rounded-full uppercase text-sm">${issue.priority}</button>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button onclick="closeModalAction()" class="bg-[#4A00FF] font-semibold cursor-pointer text-white px-4 py-2 rounded-md">
+                    Close
+                </button>
+            </div>
+    </div>                                                                               
+    `;
+    modalBox.appendChild(issueDiv);
+}
+
+const closeModalAction = () => {
+    modalBox.classList.add("hidden");
+    modalBox.classList.remove("flex");
+};
+
+modalBox.addEventListener("click", (e) => {
+    if (e.target === modalBox) {
+        closeModalAction();
+    }
+});
+
+
+const showSpinner = () => {
+    loadingSpinner.classList.remove('hidden');
+    issuesContainer.style.opacity = '0.3';
+};
+const hideSpinner = () => {
+    loadingSpinner.classList.add('hidden');
+    issuesContainer.style.opacity = '1';
+};
+
+const getDataFromDB = async () => {
+    const resp = await fetch(urlAllIssues);
+    const allIssues = await resp.json();
+    globalIssuesData = allIssues.data;
+    console.log(globalIssuesData);
+    displayAllIssues(globalIssuesData);
 }
 getDataFromDB();

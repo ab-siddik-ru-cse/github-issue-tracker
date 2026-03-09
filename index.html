@@ -14,33 +14,28 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        #priorityBtn-high {
-            background-color: #FEECEC;
-            color: #EF4444;
-        }
-
-        #priorityBtn-low {
-            background-color: #EEEFF2;
-            color: #9CA3AF;
-        }
-
-        #priorityBtn-medium {
-            background-color: #FFF6D1;
-            color: #F59E0B;
-            padding: 4px 20px;
-        }
-
         .active {
             background-color: blue;
             color: white;
         }
 
-        #border-open {
-            border-top: 4px solid #00A96E;
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4A00FF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
         }
 
-        #border-closed {
-            border-top: 4px solid #A855F7;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -106,11 +101,11 @@
                 <h1 class="font-bold sm:text-xl">GitHub Issues Tracker</h1>
             </div>
             <div class="flex gap-3">
-                <input id="search" type="text" name="search" placeholder="🔍 Search issues..." class="block rounded-sm pl-3  sm:pl-5 pr-2 sm:pr-10 py-2 outline-1 -outline-offset-1
-                 outline-gray-300 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
-                  focus:outline-indigo-500 sm:text-sm/6" />
+                <input id="searchInput" type="text" name="search" placeholder="🔍 Search issues..." class="block rounded-sm pl-3  sm:pl-5 pr-2 sm:pr-10 py-2 outline-1 -outline-offset-1
+                    outline-gray-300 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2
+                    focus:outline-indigo-500 sm:text-sm/6" />
                 <div>
-                    <button onclick="getSearchInfo()" id="search"
+                    <button onclick="getSearchInfo()" id="searchBtn"
                         class="flex-shrink-0 flex justify-center rounded-sm bg-[#4A00FF] px-5 py-2 text-sm/6 font-semibold text-white hover:bg-indigo-700 cursor-pointer transition-colors">Search
                         Issue</button>
                 </div>
@@ -140,14 +135,25 @@
             </div>
             <div class="flex gap-3">
                 <p id="open-tag" class="font-medium"><i class="fa-solid fa-circle text-sm text-green-600"> </i> Open</p>
-                <p id="closed-tag" class="font-medium"><i class="fa-solid fa-circle text-sm text-[#A855F7]"> </i> Closed</p>
+                <p id="closed-tag" class="font-medium"><i class="fa-solid fa-circle text-sm text-[#A855F7]"> </i> Closed
+                </p>
             </div>
         </section>
+        <div class="relative"></div>
+        <div id="loading-spinner"
+            class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#F1F5F9]/80 hidden">
+            <div class="loader mb-4"></div>
+            <p class="text-gray-500 font-medium animate-pulse">Loading issues...</p>
+        </div>
         <section id="issuesContainer"
             class="bg-[#FBFBFB] gap-4 max-w-[1300px] mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 rounded-lg">
 
         </section>
+    </div>
 
+    <div id="modal-box" class="fixed inset-0 hidden items-center justify-center bg-[#002C5C]/40">
+
+    </div>
     </div>
     <script src="scripts/script.js"></script>
 </body>
