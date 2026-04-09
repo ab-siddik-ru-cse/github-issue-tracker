@@ -52,11 +52,11 @@ Detailed view of individual issues with status and priority tags.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/yourusername/github-issues-tracker.git](https://github.com/yourusername/github-issues-tracker.git)
+    git clone https://github.com/ab-siddik-ru-cse/github-issue-tracker.git
     ```
 2.  **Navigate to the folder:**
     ```bash
-    cd github-issues-tracker
+    cd github-issue-tracker
     ```
 3.  **Open in Browser:**
     Open `index.html` directly in your browser or use the **VS Code Live Server** extension for the best experience.
