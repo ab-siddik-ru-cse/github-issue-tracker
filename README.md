@@ -1,23 +1,75 @@
-  - 1️⃣ What is the difference between var, let, and const?
-    -
-    - var is function-scoped, it is accessible throughout the entire function where it is declared, and it can also be redeclared and updated.var is hoisted and initialized with undefined, so it can be accessed before its declaration without throwing an error.
-    - let is block-scoped, meaning it only works inside the block {} where it is defined, and it can be updated but cannot be redeclared in the same scope.
-    - const is also block-scoped like let, but its value cannot be reassigned after it is declared, so it must be initialized at the time of declaration.
-    - let and const are also hoisted but they are not initialized immediately; they stay in a Temporal Dead Zone (TDZ) from the start of the block until the line where they are declared, so accessing them before declaration causes a ReferenceError.
+# 🐙 GitHub Issues Tracker
 
-  - 2️⃣ What is the spread operator (...)?
-    -
-    - The spread operator (...) used to expand or unpack elements of an array, object, or iterable into individual elements. It allows copy, merge, or pass multiple values easily.
+**A polished, responsive web application for managing your GitHub issues.** This project provides a clean and intuitive user interface to track, create, and manage issues efficiently.
 
-  - 3️⃣ What is the difference between map(), filter(), and forEach()?
-    - 
-    - map() creates a new array by applying a function to every element of the original array.
-    - filter() also returns a new array, but it only includes the elements that satisfy a specific condition.
-    - forEach() simply loops through each element of the array and executes a function, but it does not return a new array.
+---
 
-  - 4️⃣ What is an arrow function?
-    - 
-    - An arrow function is a shorter syntax for writing functions in JavaScript using the => symbol. It allows us to write functions in a more concise and readable way.
-  - 5️⃣ What are template literals?
-    - 
-    - Template literals in JavaScript are a way to create strings using backticks (``) instead of single (' ') or double (" ") quotes. They allow you to easily include variables or expressions inside a string using ${}.
+## 🖼️ Project Mockup
+![Project Mockup](./assets/screenshots/github-issue-tracker.png)
+
+---
+
+## 🌟 Overview
+The GitHub Issues Tracker is a frontend application that interacts with a mocked backend to manage project issues. It focuses on presenting issue data in a structured, readable format, complete with status indicators, priority labels, and assignee information.
+
+---
+
+## 📸 Screenshots
+
+### 🔑 Authentication Page
+Clean and secure login interface for project contributors.
+![Login Page](./assets/screenshots/Sign%20In.png)
+
+### 📊 Dashboard & Issue Tracking
+Main interface showing the grid layout, search functionality, and issue filters.
+![Dashboard](./assets/screenshots/dashboard.png)
+
+### 📝 Issue Details
+Detailed view of individual issues with status and priority tags.
+![Issue Details](./assets/screenshots/Popup.png)
+
+---
+
+## 🛠️ Key Features
+
+*   **Issue Grid View:** A structured grid layout displaying all current issues.
+*   **Smart Filtering:** Quick tabs for "All", "Open", and "Closed" issues.
+*   **Real-time Search:** Instantly filter issues by keywords in titles or descriptions.
+*   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views.
+*   **Priority System:** Color-coded labels (High, Medium, Low) for better task management.
+
+---
+
+## 💻 Tech Stack
+
+*   **HTML5:** Semantic structure.
+*   **Tailwind CSS:** For modern, utility-first styling and responsiveness.
+*   **JavaScript (ES6+):** Dynamic issue filtering, searching, and modal interactions.
+
+---
+
+## 🚀 How to Run Locally
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/yourusername/github-issues-tracker.git](https://github.com/yourusername/github-issues-tracker.git)
+    ```
+2.  **Navigate to the folder:**
+    ```bash
+    cd github-issues-tracker
+    ```
+3.  **Open in Browser:**
+    Open `index.html` directly in your browser or use the **VS Code Live Server** extension for the best experience.
+
+---
+
+## 📂 Folder Structure
+
+```text
+/github-issues-tracker
+├── assets/
+│   └── screenshots/     # Project images and mockup
+├── index.html           # Dashboard
+├── login.html           # Login page
+├── script.js            # Frontend logic
+└── styles.css           # Custom styles
